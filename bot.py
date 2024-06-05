@@ -16,7 +16,7 @@ client: Client = Client(intents=intents)
 
 
 async def get_response(user_input: str) -> str:
-    a = api.gossip()
+    a = api.Gossip()
     reply = a.gettingRes(user_input)
     return reply
 # STEP 2: MESSAGE FUNCTIONALITY
@@ -29,8 +29,9 @@ async def send_message(message: Message, user_message: str) -> None:
         user_message = user_message[1:]
 
     try:
-        response: str = await get_response(user_message)
-        await message.author.send(response) if is_private else await message.reply(response)
+        async with message.channel.typing():
+            response: str = await get_response(user_message)
+            await message.reply(response)
     except Exception as e:
         print(e)
 

@@ -7,13 +7,13 @@ load_dotenv()
 key = os.getenv("API_KEY")
 genai.configure(api_key=key)
 
-class gossip:
+class Gossip:
     def gettingRes(self, querry):
             try:
-                model = genai.GenerativeModel(model_name= 'gemini-1.5-flash')
-                response = model.generate_content(querry)
-                res = response.text
-                return res
+                model = genai.GenerativeModel(model_name= 'gemini-pro')
+                response = model.start_chat(history=[])
+                res = response.send_message(querry)
+                return res.text
             except:
-                 res = self.gettingRes(querry)
-                 return res
+                 res = response.send_message(querry)
+                 return res.text
